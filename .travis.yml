@@ -1,4 +1,12 @@
 sudo: required
+language: bash
+env:
+  global:
+    - LIVE_SERVICE=docker-react-test-service
+    - LIVE_CLUSTER_NAME=docker-react-test
+    - LIVE_APP_NAME=docker-react-test
+    - AWS_URL=523775743690.dkr.ecr.us-west-2.amazonaws.com
+
 services:
   - docker
 
@@ -7,3 +15,7 @@ before_install:
 
 script:
   - docker run -e CI=true kevinluoamzn/docker-react-test npm run test -- --coverage
+
+after_success:
+  - docker-deploy/docker_push.sh
+  - docker-deploy/ecs_deploy.sh
