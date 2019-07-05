@@ -17,5 +17,6 @@ script:
   - docker run -e CI=true kevinluoamzn/docker-react-test npm run test -- --coverage
 
 after_success:
+  - docker build -t kevinluoamzn/docker-react-test .
   - docker-deploy/docker_push.sh
   - docker-deploy/ecs_deploy.sh
