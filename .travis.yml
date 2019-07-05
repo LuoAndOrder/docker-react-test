@@ -11,6 +11,9 @@ services:
   - docker
 
 before_install:
+  - chmod +x docker-deploy/docker_push.sh
+  - chmod +x docker-deploy/ecs.sh
+  - chmod +x docker-deploy/ecs_deploy.sh
   - docker build -t kevinluoamzn/docker-react-test -f Dockerfile.dev .
 
 script:
