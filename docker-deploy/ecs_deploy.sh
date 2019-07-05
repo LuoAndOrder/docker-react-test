@@ -1,5 +1,5 @@
 #! /bin/bash
-
+set -e
 # Push only if it's not a pull request
 if [ -z "$TRAVIS_PULL_REQUEST" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     if [ "$TRAVIS_BRANCH" == "master" ] ; then
