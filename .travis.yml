@@ -16,9 +16,12 @@ before_install:
   - chmod +x docker-deploy/ecs_deploy.sh
   - docker build -t kevinluoamzn/docker-react-test -f Dockerfile.dev .
 
-script:
-  - docker run -e CI=true kevinluoamzn/docker-react-test npm run test -- --coverage
-
-after_success:
-  - docker-deploy/docker_push.sh
-  - docker-deploy/ecs_deploy.sh
+jobs:
+  include:
+    - stage: tests
+      script: 
+        - docker run -e CI=true kevinluoamzn/docker-react-test npm run test -- --coverage
+    - stage: deploy
+      script:
+        - docker-deploy/docker_push.sh
+        - docker-deploy/ecs_deploy.sh
