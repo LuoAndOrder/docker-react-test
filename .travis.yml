@@ -1,5 +1,8 @@
 sudo: required
+dist: xenial
 language: bash
+python:
+  - "3.6"
 env:
   global:
     - LIVE_SERVICE=docker-react-test-service
@@ -17,11 +20,12 @@ before_install:
 
 jobs:
   include:
-    - stage: tests
-      script: 
-        - docker build -t kevinluoamzn/docker-react-test -f Dockerfile.dev .
-        - docker run -e CI=true kevinluoamzn/docker-react-test npm run test -- --coverage
+    # - stage: tests
+    #   script: 
+    #     - docker build -t kevinluoamzn/docker-react-test -f Dockerfile.dev .
+    #     - docker run -e CI=true kevinluoamzn/docker-react-test npm run test -- --coverage
     - stage: deploy
-      script:
+      before_script:
         - docker-deploy/docker_push.sh
+      script:
         - docker-deploy/ecs_deploy.sh
